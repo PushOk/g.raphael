@@ -90,15 +90,15 @@
             series[0].middle = {x: cx, y: cy};
             series[0].mangle = 180;
         } else {
-            for (var i = 0; i < len; i++) {
+            var new_values = [];
+            var x = 0;
+            for (i in values) {
                 total += values[i];
-                values[i] = { value: values[i], order: i, valueOf: function () { return this.value; } };
+                new_values[x] = { value: values[i], order: i, valueOf: function () { return this.value; } };
+                x++;
             }
-            
-            //values are sorted numerically
-            values.sort(function (a, b) {
-                return b.value - a.value;
-            });
+            values = new_values;
+
             
             for (i = 0; i < len; i++) {
                 if (defcut && values[i] * 100 / total < minPercent) {
